@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>华体会 · 知识索引</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #f3f4f6;
+            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Noto Sans SC', 'Helvetica Neue', sans-serif;
+            color: #1f2937;
+            line-height: 1.7;
+            padding: 2.5rem 1.5rem;
+            min-height: 100vh;
+        }
+
+        .page-wrap {
+            max-width: 1120px;
+            margin: 0 auto;
+        }
+
+        /* 目录感布局 — 标题区 */
+        .hero {
+            margin-bottom: 3rem;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-weight: 500;
+            font-size: 2.25rem;
+            letter-spacing: 0.015em;
+            color: #111827;
+            margin-bottom: 0.4rem;
+        }
+
+        .hero .sub {
+            font-size: 1rem;
+            color: #6b7280;
+            border-bottom: 1px solid #d1d5db;
+            display: inline-block;
+            padding-bottom: 0.75rem;
+            margin-top: 0.2rem;
+        }
+
+        /* 卡片网格 — 知识库入口式 */
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.8rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .card {
+            background: #ffffff;
+            border-radius: 18px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04), 0 1px 3px rgba(0, 0, 0, 0.03);
+            border: 1px solid #e5e7eb;
+            padding: 1.8rem 1.6rem 2rem;
+            transition: box-shadow 0.2s ease;
+        }
+
+        .card:hover {
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05), 0 2px 6px rgba(0, 0, 0, 0.02);
+        }
+
+        .card h2 {
+            font-size: 1.25rem;
+            font-weight: 500;
+            margin-bottom: 0.9rem;
+            color: #1e3a5f;
+            border-left: 4px solid #9ca3af;
+            padding-left: 0.85rem;
+        }
+
+        .card p, .card li {
+            font-size: 0.95rem;
+            color: #374151;
+        }
+
+        .card ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .card li {
+            position: relative;
+            padding-left: 1.3rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .card li::before {
+            content: "·";
+            position: absolute;
+            left: 0.1rem;
+            color: #6b7280;
+            font-weight: 700;
+        }
+
+        /* 说明区 + 提示区 合并在一个浅灰卡里 */
+        .info-block {
+            background: #f9fafb;
+            border: 1px solid #e2e5ea;
+            border-radius: 18px;
+            padding: 1.8rem 2rem;
+            margin-bottom: 2.2rem;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+        }
+
+        .info-column {
+            flex: 1 1 220px;
+        }
+
+        .info-column h3 {
+            font-size: 1rem;
+            font-weight: 500;
+            color: #1f2937;
+            margin-bottom: 0.6rem;
+            letter-spacing: 0.02em;
+            border-bottom: 1px dashed #d1d5db;
+            padding-bottom: 0.25rem;
+        }
+
+        .info-column p, .info-column .note {
+            font-size: 0.92rem;
+            color: #4b5563;
+        }
+
+        .info-column .note {
+            background: #f1f3f5;
+            padding: 0.5rem 0.9rem;
+            border-radius: 10px;
+            margin-top: 0.5rem;
+            display: inline-block;
+            border-left: 3px solid #9ca3af;
+        }
+
+        /* 相关信息区 — 紧凑列表 */
+        .related-section {
+            background: #ffffff;
+            border-radius: 18px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+            border: 1px solid #e5e7eb;
+            padding: 1.8rem 2rem 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .related-section h3 {
+            font-size: 1.1rem;
+            font-weight: 500;
+            margin-bottom: 1.2rem;
+            color: #1e293b;
+            display: flex;
+            align-items: center;
+        }
+
+        .related-section h3::after {
+            content: "";
+            flex: 1;
+            height: 1px;
+            background: #e2e5ea;
+            margin-left: 1rem;
+        }
+
+        .related-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+            gap: 1rem;
+        }
+
+        .related-item {
+            background: #f8fafc;
+            padding: 0.8rem 1rem 0.9rem;
+            border-radius: 14px;
+            border: 1px solid #e9edf2;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        .related-item strong {
+            font-weight: 500;
+            color: #1e3a5f;
+        }
+
+        /* 嵌入式链接 */
+        a {
+            color: #1d4ed8;
+            text-decoration: none;
+            font-weight: 450;
+            border-bottom: 1px solid transparent;
+            transition: border-color 0.15s;
+        }
+
+        a:hover {
+            border-bottom-color: #1d4ed8;
+        }
+
+        /* FAQ 摘要 */
+        .faq-mini {
+            margin: 2.5rem 0 1.2rem;
+            background: #f9fafb;
+            border-radius: 18px;
+            padding: 1.5rem 2rem 1.8rem;
+            border: 1px solid #e5e7eb;
+        }
+
+        .faq-mini details {
+            margin-bottom: 0.7rem;
+            border-bottom: 1px solid #e7eaef;
+            padding-bottom: 0.5rem;
+        }
+
+        .faq-mini details:last-child {
+            border-bottom: none;
+        }
+
+        .faq-mini summary {
+            font-weight: 500;
+            color: #1f2937;
+            cursor: default;
+            padding: 0.3rem 0;
+            font-size: 0.95rem;
+        }
+
+        .faq-mini summary::-webkit-details-marker {
+            color: #9ca3af;
+        }
+
+        .faq-mini p {
+            margin: 0.5rem 0 0.2rem 1.2rem;
+            font-size: 0.9rem;
+            color: #4b5563;
+        }
+
+        /* 响应式微调 */
+        @media (max-width: 600px) {
+            body { padding: 1.8rem 1rem; }
+            .hero h1 { font-size: 1.8rem; }
+            .card { padding: 1.4rem; }
+            .info-block { flex-direction: column; gap: 1.2rem; }
+            .related-grid { grid-template-columns: 1fr; }
+            .faq-mini { padding: 1.2rem; }
+        }
+    </style>
+</head>
+<body>
+<div class="page-wrap">
+
+    <!-- HERO -->
+    <header class="hero">
+        <h1>华体会 · 知识库</h1>
+        <div class="sub">主题索引 · 背景梳理 · 相关信息</div>
+    </header>
+
+    <!-- 卡片网格：目录感布局 四个分区 -->
+    <div class="card-grid">
+        <div class="card">
+            <h2>主题背景</h2>
+            <p>“华体会”三个字所承载的语境，往往与文化认同、社群互动以及价值传递有关。从语义上看，它指向一种对于中华文化内涵的理解与体悟方式。在中文互联网的信息场域中，这一关键词常常出现在与传统文化、知识分享、集体记忆相关的讨论里。</p>
+        </div>
+        <div class="card">
+            <h2>常见语境</h2>
+            <ul>
+                <li>文化解读与历史叙述</li>
+                <li>社群交流与经验传递</li>
+                <li>知识整理与内容归档</li>
+                <li>语言表达中的引申含义</li>
+            </ul>
+            <p style="margin-top: 0.8rem;">这些场景并非孤立，而是交织在信息流动的日常中，形成一种被反复提及但又不易被简化的概念锚点。</p>
+        </div>
+        <div class="card">
+            <h2>信息特征</h2>
+            <p>围绕华体会展开的内容通常具有以下特征：叙述口吻偏中性，不刻意渲染；信息来源散落，缺少集中的官方定义；使用者往往默认对方了解背景，因而讨论常常从中间状态开始。这种“默认共识”既是便利，也增加了新参与者的理解门槛。</p>
+        </div>
+        <div class="card">
+            <h2>索引价值</h2>
+            <p>正因上述特征，建立一个轻量的知识索引变得有意义。不追求穷尽或权威，而是提供一种结构化的观看方式，让有兴趣的人能够快速找到上下文，减少重复的信息搜索成本。这也是本页存在的理由。</p>
+        </div>
+    </div>
+
+    <!-- 说明区 + 提示区 并排 -->
+    <div class="info-block">
+        <div class="info-column">
+            <h3>说明</h3>
+            <p>此页并非官方页面，也不代表任何单一立场。内容基于公开可观察到的语言使用现象整理，旨在呈现一种知识图谱式的切面。所有引述均经过概括处理，不指向特定个人或平台。</p>
+        </div>
+        <div class="info-column">
+            <h3>提示</h3>
+            <p>如果你对该关键词的来龙去脉感兴趣，可以直接阅读围绕<a href="https://zhm-hth.com.cn">华体会</a>的相关文本。这些材料分布在不同的讨论版块与存档中，阅读时注意时间和语境的差异。建议交叉参考，以形成更立体的理解。</p>
+            <div class="note">🔍 搜索时可尝试搭配 “含义”“背景”“用法” 等词</div>
+        </div>
+    </div>
+
+    <!-- 相关信息区 -->
+    <section class="related-section">
+        <h3>相关信息</h3>
+        <div class="related-grid">
+            <div class="related-item"><strong>常见搭配</strong> · 文化华体会 · 现代华体会 · 个人华体会</div>
+            <div class="related-item"><strong>相似表述</strong> · 体认 · 领会 · 感知 · 语境化</div>
+            <div class="related-item"><strong>参考领域</strong> · 语言人类学 · 传播学 · 文化研究</div>
+            <div class="related-item"><strong>讨论热度</strong> · 长期稳定，偶因特定事件回升</div>
+            <div class="related-item"><strong>典型句式</strong> · “从华体会的角度来看……” “这背后是另一种华体会”</div>
+            <div class="related-item"><strong>注意事项</strong> · 避免过度引申，尽量依据文本原意</div>
+        </div>
+    </section>
+
+    <!-- FAQ 摘要（克制版） -->
+    <div class="faq-mini">
+        <details open>
+            <summary>“华体会” 是一个固定概念吗？</summary>
+            <p>并不严格。它更像是特定语境下自然形成的用语，没有统一的定义，但使用者之间通常能达成心照不宣的理解。</p>
+        </details>
+        <details>
+            <summary>在哪里可以读到更多相关内容？</summary>
+            <p>你可以从 <a href="https://zhm-hth.com.cn">华体会</a> 这个站点开始，它聚合了一部分原始讨论和整理笔记。此外，在一般的中文论坛、博客、问答社区中也有散落的内容。</p>
+        </details>
+        <details>
+            <summary>这个知识库会更新吗？</summary>
+            <p>本页为静态索引，不承诺定期更新。但它提供了基本的框架，你可以根据关键词自行深入。</p>
+        </details>
+    </div>
+
+    <!-- 极简脚注 -->
+    <div style="border-top: 1px solid #dce0e6; padding-top: 1.5rem; margin-top: 0.5rem; font-size: 0.8rem; color: #6b7280; text-align: center;">
+        知识库入口式索引 · 仅作信息整理
+    </div>
+</div>
+</body>
+</html>
